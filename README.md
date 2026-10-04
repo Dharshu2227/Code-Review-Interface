@@ -1,24 +1,43 @@
-# CodeClarity AI – Code Review Interface
+# CodeClarity AI - Code Review Interface
 
 ## Project Overview
 
-CodeClarity AI is an automated code-review system designed to analyze source code and identify potential programming issues.
+CodeClarity AI is an automated code-review system that analyzes source code and identifies potential bugs, coding issues, severity levels, and possible improvements.
 
-The Code-Review Interface provides a simple web-based interface where users can submit source code and receive an automated review.
+This project extends the CodeClarity AI system by providing an interactive Code-Review Interface using Gradio. Users can enter source code, select the programming language, and receive an automated code-review report.
+
+## Problem Statement
+
+Develop a code-review interface that allows users to submit source code and automatically receive information about potential bugs, severity, explanations, code-quality score, and improvement suggestions.
+
+## Objectives
+
+* Provide an easy-to-use code-review interface.
+* Allow users to enter source code directly.
+* Support multiple programming languages.
+* Detect common programming issues.
+* Classify detected issues according to severity.
+* Explain the detected problems.
+* Generate code-improvement suggestions.
+* Calculate an overall code-quality score.
+* Display the review results in an interactive interface.
 
 ## Features
 
-* Source code input
+* Interactive code editor
 * Programming language selection
 * Automated bug detection
 * Bug severity classification
-* Bug explanations
-* Code improvement suggestions
-* Code quality score
+* Bug explanation
+* Code-improvement suggestions
+* Code-quality score
 * Risk-level classification
 * Interactive Gradio interface
+* Google Colab support
 
-## Supported Languages
+## Supported Programming Languages
+
+The current interface supports:
 
 * Python
 * Java
@@ -31,28 +50,40 @@ The Code-Review Interface provides a simple web-based interface where users can 
 * Google Colab
 * Gradio
 * Regular Expressions
-* Rule-based Code Analysis
+* Rule-Based Code Analysis
 
 ## System Workflow
 
 ```text
 User
-  ↓
+  |
+  v
 Enter Source Code
-  ↓
+  |
+  v
 Select Programming Language
-  ↓
+  |
+  v
 Code Review Engine
-  ↓
-Bug Detection
-  ↓
-Severity Analysis
-  ↓
-Improvement Suggestions
-  ↓
-Quality Score
-  ↓
-Review Report
+  |
+  +----------------------+
+  |                      |
+  v                      v
+Bug Detection       Code Analysis
+  |                      |
+  v                      v
+Severity Analysis   Quality Analysis
+  |                      |
+  +----------+-----------+
+             |
+             v
+     Improvement Suggestions
+             |
+             v
+       Quality Score
+             |
+             v
+        Review Report
 ```
 
 ## Project Structure
@@ -65,33 +96,59 @@ CodeClarity-AI-Code-Review/
 └── requirements.txt
 ```
 
-## How to Run
+## Installation
 
-### Step 1: Open Google Colab
+Install the required Python package:
 
-Upload:
-
-```text
-CodeClarity_Code_Review_Interface.ipynb
+```bash
+pip install gradio
 ```
 
-### Step 2: Install Dependencies
-
-Run:
+Or, in Google Colab:
 
 ```python
 !pip install -q gradio
 ```
 
-### Step 3: Run the Notebook
+## How to Run
 
-Execute all cells in order.
+### Step 1: Open Google Colab
 
-The Gradio interface will generate a temporary public URL.
+Upload the following notebook:
 
-## Example
+```text
+CodeClarity_Code_Review_Interface.ipynb
+```
 
-Example input:
+### Step 2: Run All Cells
+
+Execute the notebook cells in order.
+
+### Step 3: Open the Interface
+
+After executing the final cell, Gradio generates a temporary public URL.
+
+Example:
+
+```text
+ Running on public URL: https://1e327c2c2a756db31d.gradio.live
+```
+
+Open the generated URL to access the Code-Review Interface.
+
+## How to Use the Interface
+
+1. Select the programming language.
+2. Enter or paste the source code.
+3. Click the **Review Code** button.
+4. The system analyzes the source code.
+5. View the detected bugs.
+6. Check the severity of each issue.
+7. Read the explanation.
+8. Review the improvement suggestions.
+9. Check the overall code-quality score and risk level.
+
+## Example Input
 
 ```python
 def calculate_average(numbers):
@@ -105,37 +162,110 @@ password = "admin123"
 print(calculate_average(numbers))
 ```
 
-The system can identify issues such as:
+## Example Analysis
 
-* Possible division by zero
-* Hardcoded credentials
-* Input validation issues
+The system can identify potential issues such as:
 
-It then provides improvement suggestions and a code-quality score.
+### Bug 1
+
+```text
+Type: Division by Zero
+Severity: HIGH
+```
+
+Explanation:
+
+```text
+The code may attempt to divide by zero when the list is empty.
+```
+
+### Bug 2
+
+```text
+Type: Hardcoded Credential
+Severity: HIGH
+```
+
+Explanation:
+
+```text
+A password appears to be hardcoded in the source code.
+```
+
+## Improvement Suggestions
+
+The system may recommend:
+
+```text
+1. Check the denominator before performing division.
+
+2. Store credentials securely using environment variables
+   or a secret manager.
+
+3. Follow appropriate coding and formatting conventions.
+```
+
+## Code Quality Score
+
+The system calculates a score based on the detected issues.
+
+```text
+80 - 100  : GOOD
+60 - 79   : MEDIUM RISK
+0 - 59    : HIGH RISK
+```
 
 ## Output
 
-The interface provides:
+The Code-Review Interface provides:
 
 ```text
 Code Review Summary
-Bug Detection
-Severity
-Bug Explanation
-Improvement Suggestions
-Code Quality Score
-Risk Level
+        |
+        +-- Programming Language
+        |
+        +-- Number of Bugs
+        |
+        +-- Code Quality Score
+        |
+        +-- Risk Level
+        |
+        +-- Bug Detection
+        |
+        +-- Severity
+        |
+        +-- Bug Explanation
+        |
+        +-- Improvement Suggestions
 ```
+
+## Current Limitations
+
+* The current version uses rule-based analysis.
+* It detects predefined/common coding issues.
+* It does not perform complete semantic analysis.
+* The Gradio public URL generated from Google Colab is temporary.
+* The current version does not automatically modify the submitted code.
 
 ## Future Enhancements
 
-* AI/LLM-based code analysis
-* Support for additional programming languages
-* Code complexity analysis
-* Security vulnerability detection
-* Automated code fixing
-* Downloadable review reports
-* GitHub repository integration
+* Integrate an LLM for advanced code analysis.
+* Add static-analysis tools such as Bandit and Radon.
+* Support additional programming languages.
+* Detect more security vulnerabilities.
+* Add code-complexity analysis.
+* Generate corrected code automatically.
+* Generate downloadable review reports.
+* Store previous code-review results.
+* Integrate with GitHub repositories.
+* Add authentication and user history.
+* Deploy the interface permanently using Hugging Face Spaces.
+
+## Conclusion
+
+CodeClarity AI - Code Review Interface provides an interactive solution for automated source-code analysis. It combines bug detection, severity classification, explanations, improvement suggestions, and quality scoring into a single user-friendly interface.
+
+The system can be further extended with AI-based analysis and static-analysis tools to provide more accurate and comprehensive code reviews.
 
 ## Author
 
